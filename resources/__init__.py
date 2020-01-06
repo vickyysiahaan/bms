@@ -1,1 +1,1 @@
-from resources import user_resources, type_resources, wallet_resources
+from resources import site_resources, string_sensor_resources, user_resources

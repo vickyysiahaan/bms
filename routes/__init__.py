@@ -1,1 +1,1 @@
-from routes import user_routers, wallet_routers, type_routers
+from routes import site_routers, cell_sensor_routers, string_sensor_routers, user_routers

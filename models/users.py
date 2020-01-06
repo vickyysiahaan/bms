@@ -1,15 +1,16 @@
-from app import db
+from app import db, ma
 from passlib.hash import pbkdf2_sha256 as sha256
-from models import contact
 
-class UserModel(db.Model):
+class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
-    role = db.Column(db.String(120), nullable=False)
-    contact= db.relationship('ContactModel', backref='users', lazy=True, uselist=False)
+    full_name = db.Column(db.String(60), nullable=False)
+    email = db.Column(db.String(60), nullable=False)
+    department = db.Column(db.String(60), nullable=False)
+    position = db.Column(db.String(60), nullable=False)
 
     def save_to_db(self):
         db.session.add(self)
@@ -24,11 +25,10 @@ class UserModel(db.Model):
         def to_json(x):
             return {
                 'username': x.username,
-                'role': x.role,
-                'contact' : contact.ContactModel.find_by_user_id(x.contact.id)
+                'position': x.position
             }
-        query = cls.query.filter_by(id=id).first()
-        return to_json(query)
+        query_result = cls.query.filter_by(id=id).first()
+        return to_json(query_result)
 
     @classmethod
     def return_all(cls):
@@ -36,10 +36,9 @@ class UserModel(db.Model):
             return {
                 'username': x.username,
                 'password': x.password,
-                'role': x.role,
-                'contact' : contact.ContactModel.find_by_user_id(x.contact.id)
+                'position': x.position
             }
-        return {'users': list(map(lambda x: to_json(x), UserModel.query.all()))}
+        return {'users': list(map(lambda x: to_json(x), User.query.all()))}
 
     @classmethod
     def delete_all(cls):
@@ -58,3 +57,6 @@ class UserModel(db.Model):
     def verify_hash(password, hash):
         return sha256.verify(password, hash)
 
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'username', 'password', 'full_name', 'email', 'department', 'position')

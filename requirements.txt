@@ -1,0 +1,9 @@
+flask
+flask-marshmallow
+Flask-RESTful
+Flask-SQLAlchemy
+flask_migrate
+marshmallow
+SQLAlchemy
+flask_jwt_extended
+passlib

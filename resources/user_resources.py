@@ -1,66 +1,90 @@
-from flask_restful import Resource, reqparse
-from models import users, revoked_tokens, contact
+from app import db
+from flask import request
+from flask_restful import Resource
+from models.users import User, UserSchema
+from models import revoked_tokens
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required,
                                 get_jwt_identity, get_raw_jwt, get_jwt_claims)
 
-parser = reqparse.RequestParser()
-parser.add_argument('username', help='This field cannot be blank', required=True)
-parser.add_argument('password', help='This field cannot be blank', required=True)
-parser.add_argument('role', help='This field cannot be blank', required=True)
+user_schema = UserSchema()
+users_schema = UserSchema(many=True)
 
-login = reqparse.RequestParser()
-login.add_argument('username', help='This field cannot be blank', required=True)
-login.add_argument('password', help='This field cannot be blank', required=True)
-
-
-class UserRegistration(Resource):
+class UserListResource(Resource):
+    # User Registration
     def post(self):
-        data = parser.parse_args()
-
-        if users.UserModel.find_by_username(data['username']):
-            return {'message': 'User {} already exists'.format(data['username'])}
-
-        new_user = users.UserModel(
-            username=data['username'],
-            password=users.UserModel.generate_hash(data['password']),
-            role=data['role']
-        )
-
-        new_contact = contact.ContactModel(
-            first_name="",
-            last_name="",
-            email="",
-            phone="",
-            job="",
-            salary="",
-            photo=None,
-            users=new_user
-        )
-
         try:
-            new_user.save_to_db()
-            new_contact.save_to_db()
+            if User.find_by_username(request.json["username"]):
+                return {'message': 'User {} already exists'.format(request.json["username"])}
+
+            new_user = User(
+                username=request.json['username'],
+                password=User.generate_hash(request.json['password']),
+                full_name=request.json['full_name'],
+                email=request.json['email'],
+                department=request.json['department'],
+                position=request.json['position']
+            )
+
+            db.session.add(new_user)
+            db.session.commit()
+
             return {
-                'message': 'User {} was created'.format(data['username'])
+                'message': 'User {} was created'.format(new_user.username)
             }
+
         except:
             return {'message': 'Something went wrong'}, 500
 
+    # Get All Users
+    def get(self):
+        users = User.query.all()
+        return users_schema.dump(users)
+
+class UserResource(Resource):
+    # Get User Data by ID
+    def get(self, user_id):
+        user = User.query.get_or_404(user_id)
+        return user_schema.dump(user)
+
+    # Edit User Data by ID
+    def patch(self, user_id):
+        try:
+            user = User.query.get_or_404(user_id)
+
+            if 'full_name' in request.json:
+                user.full_name = request.json['full_name']
+            if 'email' in request.json:
+                user.full_name = request.json['email']
+            if 'department' in request.json:
+                user.department = request.json['department']
+            if 'position' in request.json:
+                user.position = request.json['position']
+
+            db.session.commit()
+            return user_schema.dump(user)
+        except:
+            return {'message': 'Something went wrong'}, 500
+
+    # Delete User Data by ID
+    def delete(self, user_id):
+        user = User.query.get_or_404(user_id)
+        db.session.delete(user)
+        db.session.commit()
+        return 'SUCCESSFULL', 204
+
 class UserLogin(Resource):
+    # User Login Authentication
     def post(self):
-        data = login.parse_args()
-        current_user = users.UserModel.find_by_username(data['username'])
+        current_user = User.find_by_username(request.json['username'])
         _current_user = {
             "id" : current_user.id,
-            "username": current_user.username,
-            "role": current_user.role
+            "username": current_user.username
         }
 
         if not current_user:
-            return {'message': 'User {} doesn\'t exist'.format(data['username'])}
+            return {'message': 'User {} doesn\'t exist'.format(request.json['username'])}
 
-
-        if users.UserModel.verify_hash(data['password'], current_user.password):
+        if User.verify_hash(request.json['password'], current_user.password):
             access_token = create_access_token(identity=_current_user)
             refresh_token = create_refresh_token(identity=_current_user)
             return {
@@ -73,6 +97,7 @@ class UserLogin(Resource):
 
 
 class UserLogoutAccess(Resource):
+    # User Logout Authentication
     @jwt_required
     def post(self):
         jti = get_raw_jwt()['jti']
@@ -104,20 +129,6 @@ class TokenRefresh(Resource):
         print(user_claims)
         access_token = create_access_token(identity=current_user)
         return {'access_token': access_token}
-
-
-class AllUsers(Resource):
-    @jwt_required
-    def get(self):
-        try:
-            return users.UserModel.return_all()
-        except:
-            raise
-            return {'message': 'Something went wrong'}, 500
-
-    @jwt_required
-    def delete(self):
-        return users.UserModel.delete_all()
 
 
 class SecretResource(Resource):

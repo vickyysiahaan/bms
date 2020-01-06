@@ -1,0 +1,155 @@
+###
+GET http://127.0.0.1:5000/users HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+GET http://127.0.0.1:5000/users/2 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+POST http://127.0.0.1:5000/users HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+content-type: application/json
+
+{
+  "full_name": "John Doe",
+  "department": "Engineering",
+  "position": "Engineer",
+  "username": "johndoe",
+  "password": "mymymy"
+}
+
+###
+PATCH http://127.0.0.1:5000/users/1 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+content-type: application/json
+
+{
+  "full_name": "John Coeg",
+  "department": "Marketing",
+  "position": "Sales",
+  "username": "janecoeg",
+  "password": "wowowoww"
+}
+
+###
+DELETE http://127.0.0.1:5000/users/1 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+POST http://127.0.0.1:5000/users HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+content-type: application/json
+
+{
+  "username": "admin1",
+  "password": "admin1",
+  "full_name": "John Doe",
+  "department": "Engineering",
+  "position": "Engineer",
+  "email": "support@example.com"
+}
+
+###
+POST http://127.0.0.1:5000/login HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+content-type: application/json
+
+{
+  "username": "admin",
+  "password": "admin"
+}
+
+###
+GET http://127.0.0.1:5000/users HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+POST http://127.0.0.1:5000/logout/refresh HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1NzgyNzc4NjYsIm5iZiI6MTU3ODI3Nzg2NiwianRpIjoiMTEzNzc4MjAtMjY2Ny00ZmRiLTg4M2EtNzkxYTQ0YWU5MjU2IiwiZXhwIjoxNTc4ODgyNjY2LCJpZGVudGl0eSI6ImFkbWluIiwidHlwZSI6InJlZnJlc2gifQ.2CidPSAdD2aktTmWXoSDeR3jDBeGaJ6Lmm_D17UsOxU
+
+###
+POST http://127.0.0.1:5000/logout/access HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+
+
+###
+GET http://127.0.0.1:5000/sites HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+POST http://127.0.0.1:5000/sites HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+content-type: application/json
+
+{
+  "site_name": "TA02",
+  "city": "Tangerang",
+  "site_address": "Ciledug",
+  "longitude": 57.2375,
+  "latitude": -120.3239,
+  "number_of_string": 4,
+  "total_capacity": 580.52
+}
+
+###
+GET http://127.0.0.1:5000/sites/2 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+
+###
+GET http://127.0.0.1:5000/strings HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+GET http://127.0.0.1:5000/strings?site_id=1 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+POST http://127.0.0.1:5000/strings HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+content-type: application/json
+
+{
+  "string_number": 4,
+  "site_id": 1,
+  "manufacturer": "Pilot",
+  "part_number": "PBAT600-12",
+  "number_of_cells": 4
+}
+
+###
+GET http://127.0.0.1:5000/strings/4 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+DELETE http://127.0.0.1:5000/strings/3 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+
+###
+GET http://127.0.0.1:5000/cells HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+GET http://127.0.0.1:5000/cells?string_id=1 HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+
+###
+POST http://127.0.0.1:5000/cells HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1Nzc2ODAxMjIsIm5iZiI6MTU3NzY4MDEyMiwianRpIjoiODlhYWI5MzEtNmUxNi00Mzg3LTk1Y2MtYzBlNzIzNDAzZmM1IiwiZXhwIjoxNTc3NjkwOTIyLCJpZGVudGl0eSI6ImFkbWluIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIiwiVXNlciI6eyJpZCI6MSwicm9sZSI6ImFkbWluIn19 
+content-type: application/json
+
+{
+  "cell_number": 1,
+  "string_id": 1,
+  "site_id": 1,
+  "manufacturer": "Pilot",
+  "part_number": "PBAT61-12"
+}
+
+
+
+
+
