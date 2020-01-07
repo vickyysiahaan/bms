@@ -5,5 +5,7 @@ Flask-SQLAlchemy
 flask_migrate
 marshmallow
 SQLAlchemy
+marshmallow-sqlalchemy
 flask_jwt_extended
 passlib
+jsonify

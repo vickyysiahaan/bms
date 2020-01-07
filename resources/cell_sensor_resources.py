@@ -1,7 +1,8 @@
 from app import db
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource
-from models.cell_sensors import CellSensor, CellSensorSchema
+from models.cell_sensor import CellSensor, CellSensorSchema
+from models.string_sensor import StringSensor
 
 cell_sensor_schema = CellSensorSchema()
 cell_sensors_schema = CellSensorSchema(many=True)
@@ -10,17 +11,20 @@ class CellSensorListResource(Resource):
     # CellSensor Registration
     def post(self):
         try:
-            cells_in_string = CellSensor.find_by_string_id(request.json["string_id"])["cell_sensors"]
+            cells_in_string = CellSensor.find_by_string_id(request.json["string_id"])
             for cell in cells_in_string:
-                if cell["cell_number"] == request.json["cell_number"]:
+                if cell.cell_number == request.json["cell_number"]:
                     return {'message': 'Failed! String Number {} already exists'.format(request.json["cell_number"])}
+
+            # find string sensor
+            string_sensor = StringSensor.find_by_string_id(request.json['string_id'])
 
             new_cell_sensor = CellSensor(
                 cell_number=request.json['cell_number'],
                 string_id=request.json['string_id'],
-                site_id=request.json['site_id'],
                 manufacturer=request.json['manufacturer'],
-                part_number=request.json['part_number']
+                part_number=request.json['part_number'],
+                stringsensor = string_sensor
             )
 
             db.session.add(new_cell_sensor)
@@ -40,14 +44,15 @@ class CellSensorListResource(Resource):
             cell_sensors = CellSensor.query.filter_by(string_id=string_id).all()
         else:
             cell_sensors = CellSensor.query.all()
-
-        return cell_sensors_schema.dump(cell_sensors)
+        output = cell_sensors_schema.dump(cell_sensors)
+        return jsonify(output)
 
 class CellSensorResource(Resource):
     # Get CellSensor Data by ID
     def get(self, cell_sensor_id):
-        cell_sensor = CellSensor.query.get_or_404(cell_sensor_id)
-        return cell_sensor_schema.dump(cell_sensor)
+        query_result = CellSensor.query.get_or_404(cell_sensor_id)
+        output = cell_sensor_schema.dump(query_result)
+        return jsonify(output)
 
     # Edit CellSensor Data by ID
     def patch(self, cell_sensor_id):
@@ -56,10 +61,6 @@ class CellSensorResource(Resource):
 
             if 'cell_number' in request.json:
                 cell_sensor.string_number = request.json['string_number']
-            if 'string_id' in request.json:
-                cell_sensor.string_id = request.json['string_id']
-            if 'site_id' in request.json:
-                cell_sensor.site_id = request.json['site_id']
             if 'manufacturer' in request.json:
                 cell_sensor.manufacturer = request.json['manufacturer']
             if 'part_number' in request.json:
@@ -72,7 +73,7 @@ class CellSensorResource(Resource):
 
     # Delete CellSensor Data by ID
     def delete(self, cell_sensor_id):
-        cell_sensor = CellSensor.query.get_or_404(cell_sensor_id)
-        db.session.delete(cell_sensor)
+        query_result = CellSensor.query.get_or_404(cell_sensor_id)
+        db.session.delete(query_result)
         db.session.commit()
         return 'SUCCESSFULL', 204

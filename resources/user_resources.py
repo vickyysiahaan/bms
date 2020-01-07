@@ -1,7 +1,7 @@
 from app import db
-from flask import request
+from flask import request, jsonify
 from flask_restful import Resource
-from models.users import User, UserSchema
+from models.user import User, UserSchema
 from models import revoked_tokens
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required,
                                 get_jwt_identity, get_raw_jwt, get_jwt_claims)
@@ -37,14 +37,16 @@ class UserListResource(Resource):
 
     # Get All Users
     def get(self):
-        users = User.query.all()
-        return users_schema.dump(users)
+        query_result = User.query.all()
+        output = users_schema.dump(query_result)
+        return jsonify({"users": output})
 
 class UserResource(Resource):
     # Get User Data by ID
     def get(self, user_id):
         user = User.query.get_or_404(user_id)
-        return user_schema.dump(user)
+        output = user_schema.dump(user)
+        return jsonify(output)
 
     # Edit User Data by ID
     def patch(self, user_id):
@@ -67,8 +69,8 @@ class UserResource(Resource):
 
     # Delete User Data by ID
     def delete(self, user_id):
-        user = User.query.get_or_404(user_id)
-        db.session.delete(user)
+        query_result = User.query.get_or_404(user_id)
+        db.session.delete(query_result)
         db.session.commit()
         return 'SUCCESSFULL', 204
 

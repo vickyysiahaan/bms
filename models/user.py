@@ -22,23 +22,13 @@ class User(db.Model):
 
     @classmethod
     def find_by_user_id(cls, id):
-        def to_json(x):
-            return {
-                'username': x.username,
-                'position': x.position
-            }
         query_result = cls.query.filter_by(id=id).first()
-        return to_json(query_result)
+        return query_result
 
     @classmethod
     def return_all(cls):
-        def to_json(x):
-            return {
-                'username': x.username,
-                'password': x.password,
-                'position': x.position
-            }
-        return {'users': list(map(lambda x: to_json(x), User.query.all()))}
+        query_result = User.query.all()
+        return query_result
 
     @classmethod
     def delete_all(cls):
@@ -57,6 +47,6 @@ class User(db.Model):
     def verify_hash(password, hash):
         return sha256.verify(password, hash)
 
-class UserSchema(ma.Schema):
+class UserSchema(ma.ModelSchema):
     class Meta:
-        fields = ('id', 'username', 'password', 'full_name', 'email', 'department', 'position')
+        model = User

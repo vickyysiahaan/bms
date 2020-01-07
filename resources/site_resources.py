@@ -1,7 +1,8 @@
 from app import db
 from flask import request
 from flask_restful import Resource
-from models.sites import Site, SiteSchema
+from models.site import Site, SiteSchema
+from flask import jsonify
 
 site_schema = SiteSchema()
 sites_schema = SiteSchema(many=True)
@@ -35,14 +36,16 @@ class SiteListResource(Resource):
 
     # Get All Sites
     def get(self):
-        sites = Site.query.all()
-        return sites_schema.dump(sites)
+        query_result = Site.query.all()
+        output = sites_schema.dump(query_result)
+        return jsonify({"sites": output})
 
 class SiteResource(Resource):
     # Get Site Data by ID
     def get(self, site_id):
-        site = Site.query.get_or_404(site_id)
-        return site_schema.dump(site)
+        query_result = Site.query.get_or_404(site_id)
+        output = site_schema.dump(query_result)
+        return jsonify(output)
 
     # Edit Site Data by ID
     def patch(self, site_id):
@@ -71,7 +74,7 @@ class SiteResource(Resource):
 
     # Delete Site Data by ID
     def delete(self, site_id):
-        site = Site.query.get_or_404(site_id)
-        db.session.delete(site)
+        query_result = Site.query.get_or_404(site_id)
+        db.session.delete(query_result)
         db.session.commit()
         return 'SUCCESSFULL', 204
